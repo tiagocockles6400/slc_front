@@ -1,8 +1,8 @@
 # Meu Front
 
-Este pequeno projeto faz parte do material diático da Disciplina **Desenvolvimento Full Stack Básico** 
+Este pequeno projeto faz parte da entrega do MVP do curso **Desenvolvimento Full Stack Básico** 
 
-O objetivo aqui é ilutsrar o conteúdo apresentado na terceira aula.
+O objetivo aqui é apresentar um sistema de lista de compras compartilhada.
 
 ---
 ## Como executar
