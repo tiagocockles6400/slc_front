@@ -25,10 +25,10 @@ const getItensLista = async (item) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      data.produtos.forEach(item => insertItem(item.nome, item.quantidade, item.valor))
+      data.produtos.forEach(item => insertItem(item.id, item.nome, item.quantidade, item.valor))
     })
     .catch((error) => {
-      alert("Erro na lista selecionada");
+      alert("Erro na lista selecionada\n\n" + error);
     });
 }
 
@@ -39,7 +39,7 @@ const getItensLista = async (item) => {
 */
 const urlParams = new URLSearchParams(window.location.search).get('id_lista');
 document.getElementById("id_lista").value = urlParams;
-console.log(urlParams);
+
 getNomeLista(urlParams);
 getItensLista(urlParams);
 
@@ -55,7 +55,7 @@ const postItem = async (id_lista, nome, quantidade, preco) => {
   formData.append('nome', nome);
   formData.append('quantidade', quantidade);
   formData.append('valor', preco);
-console.log(id_lista);
+
   let url = 'http://127.0.0.1:5000/produto';
   fetch(url, {
     method: 'post',
@@ -63,8 +63,12 @@ console.log(id_lista);
   })
   .then((response) => response.json())
   .then((data) => {
-      insertItem(data.nome, data.quantidade, data.valor)
-      alert("Produto adicionado.")
+      if(data.message) {
+        alert(data.message);
+      } else {
+        insertItem(data.id, data.nome, data.quantidade, data.valor);
+        alert("Produto adicionado.");
+      }
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -96,11 +100,12 @@ const removeElement = () => {
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
-      if (confirm("Você tem certeza?")) {
+      const idItem = div.getElementsByTagName('td')[0].innerHTML
+      
+      if (confirm("Você tem certeza que deseja apagar esse produto?")) {
         div.remove();
-        deleteItem(nomeItem);
-        alert("Produto removido");
+        deleteItem(idItem);
+        alert("Produto removido.");
       }
     }
   }
@@ -149,8 +154,8 @@ const newProduto = (item) => {
   Função para inserir items na lista apresentada
   --------------------------------------------------------------------------------------
 */
-const insertItem = (nameProduct, quantity, price) => {
-  var item = [nameProduct, quantity, price]
+const insertItem = (idProduct, nameProduct, quantity, price) => {
+  var item = [idProduct, nameProduct, quantity, price]
   var table = document.getElementById('myTable');
   var row = table.insertRow();
 

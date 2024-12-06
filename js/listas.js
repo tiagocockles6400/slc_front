@@ -79,11 +79,11 @@ const removeElement = () => {
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
-      if (confirm("Você tem certeza?")) {
+      const idItem = div.getElementsByTagName('td')[0].innerHTML
+      if (confirm("Você tem certeza que deseja excluir essa lista e todos os seus produtos?")) {
         div.remove()
-        deleteItem(nomeItem)
-        alert("Removido!")
+        deleteLista(idItem)
+        alert("Lista Removida com todos os seus produtos.")
       }
     }
   }
@@ -95,7 +95,7 @@ const removeElement = () => {
   --------------------------------------------------------------------------------------
 */
 const deleteLista = (item) => {
-  console.log(item)
+  
   let url = 'http://127.0.0.1:5000/lista?id=' + item;
   fetch(url, {
     method: 'delete'
@@ -134,13 +134,13 @@ const newLista = () => {
 
 const insertLista = (idLista, nomeLista, tipoLista, qtdLista, valorLista) => {
   
-  var item = [nomeLista, getNomeLista(tipoLista), qtdLista, valorLista]
+  var item = [idLista, nomeLista, getNomeLista(tipoLista), qtdLista, valorLista]
   var table = document.getElementById('myLists');
   var row = table.insertRow();
 
   for (var i = 0; i < item.length; i++) {
     var cel = row.insertCell(i);
-    if(i === 0) {
+    if(i === 1) {
       cel.innerHTML = '<a href=produto.html?id_lista=' + idLista + '>' + item[i] + '</a>';
     } else {
       cel.textContent = item[i];
