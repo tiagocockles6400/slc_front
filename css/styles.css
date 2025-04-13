@@ -146,3 +146,43 @@ tr:hover {
     background: rgb(200, 199, 199);
 }
 
+.cotacao_dolar {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 50px;
+    text-align: center;
+    color: brown;
+}
+
+.ticker-container {
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #222;
+    padding: 10px 0;
+    color: white;
+}
+
+.ticker-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scrollTicker 15s linear infinite;
+}
+
+@keyframes scrollTicker {
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.cotacao {
+    display: inline-block;
+    margin-right: 50px;
+    font-size: 1.0rem;
+}
+
