@@ -13,7 +13,7 @@
 </head>
 
 <body>
-     <!-- Cabeçalho de informações do sistema -->
+    <!-- Cabeçalho de informações do sistema -->
     <header>
         <div class="topo">
             <div class="logo">
@@ -27,7 +27,7 @@
         <div class="blackspace"></div>
     </header>
 
-     <!-- Opções para adicionar um novo item -->
+    <!-- Opções para adicionar um novo item -->
     <section class="newItem">
         <input type="text" class="form-control w-25" id="nomeLista" name="nomeLista" maxlength="100" placeholder="Insira o nome da lista" required>&nbsp;
         <select class="form-select" id="tipoLista" name="tipoLista" required>
@@ -36,7 +36,7 @@
             <option value="2">Semanal</option>
             <option value="3">Outros</option>
         </select>
-        
+
         <button onclick="newLista()" class="btn btn-primary">Criar</button>
     </section>
 
@@ -47,8 +47,7 @@
     <section class="items">
         <table id="myLists">
             <tr>
-                <th class="col-1 text-center">Id</th>
-                <th class="col-4">Nome da lista</th>
+                <th class="col-5">Nome da lista</th>
                 <th class="col-2 text-center">Tipo de lista</th>
                 <th class="col-2 text-center">Qtd itens</th>
                 <th class="col-2 text-center">Valor total</th>
@@ -58,6 +57,12 @@
     </section>
 
     <script src="js/listas.js"></script>
+    <br />
+    <div class="ticker-container">
+        <div class="ticker-content" id="ticker">
+            <!-- Cotações aparecerão aqui -->
+        </div>
+    </div>
 </body>
 
 </html>
