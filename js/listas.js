@@ -53,6 +53,34 @@ const postLista = async (nomeLista, tipoLista) => {
     });
 }
 
+async function obterCotacoes() {
+    try {
+        const [respostaUSD, respostaEUR] = await Promise.all([
+            fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL'),
+            fetch('https://economia.awesomeapi.com.br/json/last/EUR-BRL')
+        ]);
+
+        const dadosUSD = await respostaUSD.json();
+        const dadosEUR = await respostaEUR.json();
+
+        const cotacaoDolar = parseFloat(dadosUSD.USDBRL.bid).toFixed(2);
+        const cotacaoEuro = parseFloat(dadosEUR.EURBRL.bid).toFixed(2);
+
+        const ticker = document.getElementById('ticker');
+        ticker.innerHTML = `
+          <div class="cotacao">💵 Dólar: R$ ${cotacaoDolar}</div>
+          <div class="cotacao">💶 Euro: R$ ${cotacaoEuro}</div>
+        `;
+
+        // Repete o conteúdo para rolagem contínua
+        ticker.innerHTML += ticker.innerHTML;
+
+    } catch (erro) {
+        console.error('Erro ao obter as cotações:', erro.message);
+    }
+}
+
+obterCotacoes();
 
 /*
   --------------------------------------------------------------------------------------
@@ -79,11 +107,11 @@ const removeElement = () => {
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const idItem = div.getElementsByTagName('td')[0].innerHTML
-      if (confirm("Você tem certeza que deseja excluir essa lista e todos os seus produtos?")) {
+      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
+      if (confirm("Você tem certeza?")) {
         div.remove()
-        deleteLista(idItem)
-        alert("Lista Removida com todos os seus produtos.")
+        deleteItem(nomeItem)
+        alert("Removido!")
       }
     }
   }
@@ -95,7 +123,7 @@ const removeElement = () => {
   --------------------------------------------------------------------------------------
 */
 const deleteLista = (item) => {
-  
+  console.log(item)
   let url = 'http://127.0.0.1:5000/lista?id=' + item;
   fetch(url, {
     method: 'delete'
@@ -134,13 +162,13 @@ const newLista = () => {
 
 const insertLista = (idLista, nomeLista, tipoLista, qtdLista, valorLista) => {
   
-  var item = [idLista, nomeLista, getNomeLista(tipoLista), qtdLista, valorLista]
+  var item = [nomeLista, getNomeLista(tipoLista), qtdLista, valorLista]
   var table = document.getElementById('myLists');
   var row = table.insertRow();
 
   for (var i = 0; i < item.length; i++) {
     var cel = row.insertCell(i);
-    if(i === 1) {
+    if(i === 0) {
       cel.innerHTML = '<a href=produto.html?id_lista=' + idLista + '>' + item[i] + '</a>';
     } else {
       cel.textContent = item[i];
